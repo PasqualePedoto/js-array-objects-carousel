@@ -1,0 +1,45 @@
+/* Diamo un pò d'aria ai contenuti */
+
+main {
+    padding: 50px;
+}
+
+/* Facciamo sì che l'immagine rientri perfettamente all'interno
+del blocco contenitore */
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Definiamo le grandezze del carosello e della thumbnails */
+
+#carousel {
+    height: calc(75vh - 50px);
+    position: relative;
+
+    background-color: red;
+}
+
+#thumbnails {
+    height: calc(25vh - 50px);
+
+    background-color: green;
+
+    display: flex;
+    flex-basis: calc(100% / 5);
+}
+
+#thumbnails>div {
+    border: 2px solid transparent;
+}
+
+/* Definiamo l'area dove sarà la descrizione */
+
+#description {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+
+    font-size: 3rem;
+}
