@@ -4,6 +4,10 @@ main {
     padding: 50px;
 }
 
+figure {
+    margin: 0;
+}
+
 /* Facciamo sì che l'immagine rientri perfettamente all'interno
 del blocco contenitore */
 
@@ -18,22 +22,14 @@ img {
     height: calc(75vh - 50px);
     position: relative;
 
-    background-color: red;
-
     position: relative;
 }
 
 #thumbnails {
     height: calc(25vh - 50px);
 
-    background-color: green;
-
     display: flex;
     flex-basis: calc(100% / 5);
-}
-
-#thumbnails>div {
-    border: 2px solid transparent;
 }
 
 /* Definiamo l'area dove sarà la descrizione */
@@ -72,4 +68,20 @@ img {
     top: 0;
     right: 0;
     bottom: 0;
+}
+
+/* Filtro thumbnails image */
+
+.not-active-image-thumb {
+    filter: grayscale(0.8);
+    border: 2px solid transparent;
+}
+
+.active-image-thumb {
+    filter: grayscale(0);
+    border: 2px solid white;
+}
+
+.active {
+    display: block;
 }

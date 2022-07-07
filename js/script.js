@@ -75,10 +75,11 @@ const images = [
 
 const carousel = document.getElementById('carousel');
 const description = document.getElementById('description');
+const thumbnails = document.getElementById('thumbnails');
 
 // @ Funzioni
 
-const insertImage = (image, index) => {
+const insertImageinCarousel = (image, index) => {
 
     const { url, title, description } = image;
 
@@ -86,7 +87,9 @@ const insertImage = (image, index) => {
     const figureElement = document.createElement('figure');
     figureElement.classList.add('w-100', 'h-100');
     figureElement.dataset.number = `image-${index}`;
+    figureElement.id = `image-carousel-${index}`;
     if (index !== 0) figureElement.classList.add('d-none');
+    else figureElement.classList.add('active');
 
     //Creiamo un element img
     const imgElement = document.createElement('img');
@@ -100,6 +103,28 @@ const insertImage = (image, index) => {
 
 }
 
+const insertImageinThumbnails = (image, index) => {
+    const { url, title, description } = image;
+
+    //Creiamo un element figure
+    const figureElement = document.createElement('figure');
+    figureElement.classList.add('w-100', 'h-100');
+    figureElement.dataset.number = `image-${index}`;
+    figureElement.id = `image-thumb-${index}`;
+    if (index !== 0) figureElement.classList.add('not-active-image-thumb');
+    else figureElement.classList.add('active-image-thumb');
+
+    //Creiamo un element img
+    const imgElement = document.createElement('img');
+
+    imgElement.src = url;
+    imgElement.alt = title;
+
+    //Agganciamo l'img e il figure
+    figureElement.appendChild(imgElement);
+    thumbnails.appendChild(figureElement);
+}
+
 const insertScrollRightAndLeft = () => {
     carousel.innerHTML += `<button id="left-scroll" class="border-0"><i class="fa-solid fa-caret-left fa-2x"></i></button>
     <button id="right-scroll" class="border-0"><i class="fa-solid fa-caret-right fa-2x"></i></button>`
@@ -108,7 +133,8 @@ const insertScrollRightAndLeft = () => {
 // Inseriamo le singole immagini e gli scroll laterali
 
 images.forEach((image, index) => {
-    insertImage(image, index);
+    insertImageinCarousel(image, index);
+    insertImageinThumbnails(image, index)
 });
 
 insertScrollRightAndLeft();
@@ -129,22 +155,61 @@ let currentPosition = 0;
 const listOfFigure = document.querySelectorAll('#carousel figure');
 
 rightButton.addEventListener('click', () => {
+    listOfFigure[currentPosition].classList.remove('active');
     listOfFigure[currentPosition].classList.add('d-none');
 
     if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
     else currentPosition++;
 
     listOfFigure[currentPosition].classList.remove('d-none');
+    listOfFigure[currentPosition].classList.add('active');
 });
 
 // * Bottone di sinistra
 
 leftButton.addEventListener('click', () => {
+    listOfFigure[currentPosition].classList.remove('active');
     listOfFigure[currentPosition].classList.add('d-none');
 
     if (currentPosition === 0) currentPosition = listOfFigure.length - 1;
     else currentPosition--;
 
     listOfFigure[currentPosition].classList.remove('d-none');
+    listOfFigure[currentPosition].classList.add('active');
+});
+
+// # BONUS 1
+
+const allThumbFigure = document.querySelectorAll('#thumbnails figure');
+const allCarouselFigure = document.querySelectorAll('#carousel figure')
+
+allThumbFigure.forEach((figure, index) => {
+    figure.addEventListener('click', () => {
+
+        // Disabilito quella figure nel thumbnails che è in active
+        allThumbFigure.forEach((oldFigure) => {
+            if (oldFigure.classList.contains('active-image-thumb')) {
+                oldFigure.classList.remove('active-image-thumb')
+                oldFigure.classList.add('not-active-image-thumb')
+            }
+        });
+
+        figure.classList.remove('not-active-image-thumb');
+        figure.classList.add('active-image-thumb');
+
+        //******************* */
+
+        allCarouselFigure.forEach((oldFigure) => {
+            if (oldFigure.classList.contains('active')) {
+                oldFigure.classList.remove('active')
+                oldFigure.classList.add('d-none');
+            }
+        });
+
+        const now = document.getElementById(`image-carousel-${index}`)
+
+        now.classList.remove('d-none');
+        now.classList.add('active');
+    })
 });
 
