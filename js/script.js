@@ -85,17 +85,25 @@ const insertImageinCarousel = (image, index) => {
 
     //Creiamo un element figure
     const figureElement = document.createElement('figure');
-    figureElement.classList.add('w-100', 'h-100');
+    figureElement.classList.add('w-100', 'h-100', 'position-relative');
     figureElement.dataset.number = `image-${index}`;
     figureElement.id = `image-carousel-${index}`;
     if (index !== 0) figureElement.classList.add('d-none');
-    else figureElement.classList.add('active');
+    else {
+        figureElement.classList.add('active');
+        description.inn
+    }
 
     //Creiamo un element img
     const imgElement = document.createElement('img');
 
     imgElement.src = url;
     imgElement.alt = title;
+
+    const text = document.createElement('div');
+    text.classList.add('description');
+    text.innerHTML = `${title}<br>${description}`;
+    figureElement.appendChild(text);
 
     //Agganciamo l'img e il figure
     figureElement.appendChild(imgElement);
@@ -225,13 +233,13 @@ allThumbFigure.forEach((figure, index) => {
 
 // # BONUS 2
 
-const timerInterval = setInterval(() => {
-    listOfFigure[currentPosition].classList.remove('active');
-    listOfFigure[currentPosition].classList.add('d-none');
+// const timerInterval = setInterval(() => {
+//     listOfFigure[currentPosition].classList.remove('active');
+//     listOfFigure[currentPosition].classList.add('d-none');
 
-    if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
-    else currentPosition++;
+//     if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
+//     else currentPosition++;
 
-    listOfFigure[currentPosition].classList.remove('d-none');
-    listOfFigure[currentPosition].classList.add('active');
-}, 3000);
+//     listOfFigure[currentPosition].classList.remove('d-none');
+//     listOfFigure[currentPosition].classList.add('active');
+// }, 3000);
