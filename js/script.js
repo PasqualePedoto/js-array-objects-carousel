@@ -166,6 +166,8 @@ insertScrollRightAndLeft();
 
 const rightButton = document.getElementById('right-scroll');
 const leftButton = document.getElementById('left-scroll');
+const allThumbFigure = document.querySelectorAll('#thumbnails figure');
+const allCarouselFigure = document.querySelectorAll('#carousel figure');
 
 // @ Definiamo la logica dei bottoni con gli addEventListener
 
@@ -201,9 +203,6 @@ leftButton.addEventListener('click', () => {
 
 // # BONUS 1
 
-const allThumbFigure = document.querySelectorAll('#thumbnails figure');
-const allCarouselFigure = document.querySelectorAll('#carousel figure')
-
 allThumbFigure.forEach((figure, index) => {
     figure.addEventListener('click', () => {
 
@@ -223,3 +222,16 @@ allThumbFigure.forEach((figure, index) => {
         currentPosition = index;
     })
 });
+
+// # BONUS 2
+
+const timerInterval = setInterval(() => {
+    listOfFigure[currentPosition].classList.remove('active');
+    listOfFigure[currentPosition].classList.add('d-none');
+
+    if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
+    else currentPosition++;
+
+    listOfFigure[currentPosition].classList.remove('d-none');
+    listOfFigure[currentPosition].classList.add('active');
+}, 3000);
