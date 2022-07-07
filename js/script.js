@@ -76,6 +76,9 @@ const images = [
 const carousel = document.getElementById('carousel');
 const description = document.getElementById('description');
 const thumbnails = document.getElementById('thumbnails');
+const startButton = document.getElementById('start-button');
+const stopButton = document.getElementById('stop-button');
+const invertButton = document.getElementById('invert-auto');
 
 // @ Funzioni
 
@@ -243,3 +246,37 @@ allThumbFigure.forEach((figure, index) => {
 //     listOfFigure[currentPosition].classList.remove('d-none');
 //     listOfFigure[currentPosition].classList.add('active');
 // }, 3000);
+
+// # BONUS 3
+let timerInterval;
+
+startButton.addEventListener('click', () => {
+    timerInterval = setInterval(() => {
+        listOfFigure[currentPosition].classList.remove('active');
+        listOfFigure[currentPosition].classList.add('d-none');
+
+        if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
+        else currentPosition++;
+
+        listOfFigure[currentPosition].classList.remove('d-none');
+        listOfFigure[currentPosition].classList.add('active');
+    }, 3000);
+})
+
+stopButton.addEventListener('click', () => {
+    clearInterval(timerInterval);
+})
+
+invertButton.addEventListener('click', () => {
+    timerInterval = setInterval(() => {
+        listOfFigure[currentPosition].classList.remove('active');
+        listOfFigure[currentPosition].classList.add('d-none');
+
+        if (currentPosition === 0) currentPosition = listOfFigure.length - 1;
+        else currentPosition--;
+
+        listOfFigure[currentPosition].classList.remove('d-none');
+        listOfFigure[currentPosition].classList.add('active');
+    }, 3000);
+})
+
