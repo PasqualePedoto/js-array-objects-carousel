@@ -130,6 +130,27 @@ const insertScrollRightAndLeft = () => {
     <button id="right-scroll" class="border-0"><i class="fa-solid fa-caret-right fa-2x"></i></button>`
 }
 
+const disabledThumbFigure = (allThumbFigure, figure) => {
+    allThumbFigure.forEach((oldFigure) => {
+        if (oldFigure.classList.contains('active-image-thumb')) {
+            oldFigure.classList.remove('active-image-thumb')
+            oldFigure.classList.add('not-active-image-thumb')
+        }
+    });
+
+    figure.classList.remove('not-active-image-thumb');
+    figure.classList.add('active-image-thumb');
+}
+
+const disabledCarouselFigure = (allCarouselFigure) => {
+    allCarouselFigure.forEach((oldFigure) => {
+        if (oldFigure.classList.contains('active')) {
+            oldFigure.classList.remove('active')
+            oldFigure.classList.add('d-none');
+        }
+    });
+}
+
 // Inseriamo le singole immagini e gli scroll laterali
 
 images.forEach((image, index) => {
@@ -186,30 +207,19 @@ const allCarouselFigure = document.querySelectorAll('#carousel figure')
 allThumbFigure.forEach((figure, index) => {
     figure.addEventListener('click', () => {
 
-        // Disabilito quella figure nel thumbnails che è in active
-        allThumbFigure.forEach((oldFigure) => {
-            if (oldFigure.classList.contains('active-image-thumb')) {
-                oldFigure.classList.remove('active-image-thumb')
-                oldFigure.classList.add('not-active-image-thumb')
-            }
-        });
-
-        figure.classList.remove('not-active-image-thumb');
-        figure.classList.add('active-image-thumb');
+        // Disabilito la figure nel thumbnails che è in active
+        disabledThumbFigure(allThumbFigure, figure);
 
         //******************* */
 
-        allCarouselFigure.forEach((oldFigure) => {
-            if (oldFigure.classList.contains('active')) {
-                oldFigure.classList.remove('active')
-                oldFigure.classList.add('d-none');
-            }
-        });
+        // Disabilito la figure nel carousel che è in active
+        disabledCarouselFigure(allCarouselFigure);
 
-        const now = document.getElementById(`image-carousel-${index}`)
+        const newVisual = document.getElementById(`image-carousel-${index}`)
 
-        now.classList.remove('d-none');
-        now.classList.add('active');
+        newVisual.classList.remove('d-none');
+        newVisual.classList.add('active');
+
+        currentPosition = index;
     })
 });
-
