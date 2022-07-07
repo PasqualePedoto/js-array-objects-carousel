@@ -19,6 +19,8 @@ img {
     position: relative;
 
     background-color: red;
+
+    position: relative;
 }
 
 #thumbnails {
@@ -42,4 +44,32 @@ img {
     right: 5%;
 
     font-size: 3rem;
+}
+
+/* Scroll laterale */
+
+#left-scroll,
+#right-scroll {
+    position: absolute;
+    height: 100%;
+
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: #dedede;
+    filter: opacity(0.5);
+}
+
+#left-scroll {
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+#right-scroll {
+    top: 0;
+    right: 0;
+    bottom: 0;
 }

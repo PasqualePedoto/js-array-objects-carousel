@@ -67,3 +67,84 @@ const images = [
             'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam.',
     },
 ];
+
+// # MILESTONE 1
+
+// * Creiamo dinamicamente l'HTML partendo da js :
+// @ Bersagliamo gli elementi nel DOM
+
+const carousel = document.getElementById('carousel');
+const description = document.getElementById('description');
+
+// @ Funzioni
+
+const insertImage = (image, index) => {
+
+    const { url, title, description } = image;
+
+    //Creiamo un element figure
+    const figureElement = document.createElement('figure');
+    figureElement.classList.add('w-100', 'h-100');
+    figureElement.dataset.number = `image-${index}`;
+    if (index !== 0) figureElement.classList.add('d-none');
+
+    //Creiamo un element img
+    const imgElement = document.createElement('img');
+
+    imgElement.src = url;
+    imgElement.alt = title;
+
+    //Agganciamo l'img e il figure
+    figureElement.appendChild(imgElement);
+    carousel.appendChild(figureElement);
+
+}
+
+const insertScrollRightAndLeft = () => {
+    carousel.innerHTML += `<button id="left-scroll" class="border-0"><i class="fa-solid fa-caret-left fa-2x"></i></button>
+    <button id="right-scroll" class="border-0"><i class="fa-solid fa-caret-right fa-2x"></i></button>`
+}
+
+// Inseriamo le singole immagini e gli scroll laterali
+
+images.forEach((image, index) => {
+    insertImage(image, index);
+});
+
+insertScrollRightAndLeft();
+
+// # Milestone 2 
+
+// @ Bersagliamo i bottoni ed abilitiamo lo scroll laterale
+
+const rightButton = document.getElementById('right-scroll');
+const leftButton = document.getElementById('left-scroll');
+
+// @ Definiamo la logica dei bottoni con gli addEventListener
+
+// * Bottone di destra
+
+let currentPosition = 0;
+
+const listOfFigure = document.querySelectorAll('#carousel figure');
+
+rightButton.addEventListener('click', () => {
+    listOfFigure[currentPosition].classList.add('d-none');
+
+    if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
+    else currentPosition++;
+
+    listOfFigure[currentPosition].classList.remove('d-none');
+});
+
+// * Bottone di sinistra
+
+leftButton.addEventListener('click', () => {
+    listOfFigure[currentPosition].classList.add('d-none');
+
+    if (currentPosition === 0) currentPosition = listOfFigure.length - 1;
+    else currentPosition--;
+
+    listOfFigure[currentPosition].classList.remove('d-none');
+});
+
