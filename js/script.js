@@ -191,12 +191,16 @@ const listOfFigure = document.querySelectorAll('#carousel figure');
 rightButton.addEventListener('click', () => {
     listOfFigure[currentPosition].classList.remove('active');
     listOfFigure[currentPosition].classList.add('d-none');
+    allThumbFigure[currentPosition].classList.remove('active-image-thumb');
+    allThumbFigure[currentPosition].classList.add('not-active-image-thumb');
 
     if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
     else currentPosition++;
 
     listOfFigure[currentPosition].classList.remove('d-none');
     listOfFigure[currentPosition].classList.add('active');
+    allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
+    allThumbFigure[currentPosition].classList.add('active-image-thumb');
 });
 
 // * Bottone di sinistra
@@ -204,12 +208,16 @@ rightButton.addEventListener('click', () => {
 leftButton.addEventListener('click', () => {
     listOfFigure[currentPosition].classList.remove('active');
     listOfFigure[currentPosition].classList.add('d-none');
+    allThumbFigure[currentPosition].classList.remove('active-image-thumb');
+    allThumbFigure[currentPosition].classList.add('not-active-image-thumb');
 
     if (currentPosition === 0) currentPosition = listOfFigure.length - 1;
     else currentPosition--;
 
     listOfFigure[currentPosition].classList.remove('d-none');
     listOfFigure[currentPosition].classList.add('active');
+    allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
+    allThumbFigure[currentPosition].classList.add('active-image-thumb');
 });
 
 // # BONUS 1
@@ -217,20 +225,34 @@ leftButton.addEventListener('click', () => {
 allThumbFigure.forEach((figure, index) => {
     figure.addEventListener('click', () => {
 
-        // Disabilito la figure nel thumbnails che è in active
-        disabledThumbFigure(allThumbFigure, figure);
+        // // Disabilito la figure nel thumbnails che è in active
+        // disabledThumbFigure(allThumbFigure, figure);
 
-        //******************* */
+        // //******************* */
 
-        // Disabilito la figure nel carousel che è in active
-        disabledCarouselFigure(allCarouselFigure);
+        // // Disabilito la figure nel carousel che è in active
+        // disabledCarouselFigure(allCarouselFigure);
 
-        const newVisual = document.getElementById(`image-carousel-${index}`)
+        // const newVisual = document.getElementById(`image-carousel-${index}`)
 
-        newVisual.classList.remove('d-none');
-        newVisual.classList.add('active');
+        // newVisual.classList.remove('d-none');
+        // newVisual.classList.add('active');
+
+        // currentPosition = index;
+
+        // $ SOLUZIONE MIGLIORE E MAGGIORMENTE PULITA
+
+        listOfFigure[currentPosition].classList.remove('active');
+        listOfFigure[currentPosition].classList.add('d-none');
+        allThumbFigure[currentPosition].classList.remove('active-image-thumb');
+        allThumbFigure[currentPosition].classList.add('not-active-image-thumb');
 
         currentPosition = index;
+
+        listOfFigure[currentPosition].classList.remove('d-none');
+        listOfFigure[currentPosition].classList.add('active');
+        allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
+        allThumbFigure[currentPosition].classList.add('active-image-thumb');
     })
 });
 
@@ -254,12 +276,16 @@ startButton.addEventListener('click', () => {
     timerInterval = setInterval(() => {
         listOfFigure[currentPosition].classList.remove('active');
         listOfFigure[currentPosition].classList.add('d-none');
+        allThumbFigure[currentPosition].classList.remove('active-image-thumb');
+        allThumbFigure[currentPosition].classList.add('not-active-image-thumb');
 
         if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
         else currentPosition++;
 
         listOfFigure[currentPosition].classList.remove('d-none');
         listOfFigure[currentPosition].classList.add('active');
+        allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
+        allThumbFigure[currentPosition].classList.add('active-image-thumb');
     }, 3000);
 })
 
@@ -271,12 +297,16 @@ invertButton.addEventListener('click', () => {
     timerInterval = setInterval(() => {
         listOfFigure[currentPosition].classList.remove('active');
         listOfFigure[currentPosition].classList.add('d-none');
+        allThumbFigure[currentPosition].classList.remove('active-image-thumb');
+        allThumbFigure[currentPosition].classList.add('not-active-image-thumb');
 
         if (currentPosition === 0) currentPosition = listOfFigure.length - 1;
         else currentPosition--;
 
         listOfFigure[currentPosition].classList.remove('d-none');
         listOfFigure[currentPosition].classList.add('active');
+        allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
+        allThumbFigure[currentPosition].classList.add('active-image-thumb');
     }, 3000);
 })
 
