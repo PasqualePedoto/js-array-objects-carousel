@@ -188,7 +188,7 @@ let currentPosition = 0;
 
 const listOfFigure = document.querySelectorAll('#carousel figure');
 
-rightButton.addEventListener('click', () => {
+const rightScroll = () => {
     listOfFigure[currentPosition].classList.remove('active');
     listOfFigure[currentPosition].classList.add('d-none');
     allThumbFigure[currentPosition].classList.remove('active-image-thumb');
@@ -201,11 +201,9 @@ rightButton.addEventListener('click', () => {
     listOfFigure[currentPosition].classList.add('active');
     allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
     allThumbFigure[currentPosition].classList.add('active-image-thumb');
-});
+}
 
-// * Bottone di sinistra
-
-leftButton.addEventListener('click', () => {
+const leftScroll = () => {
     listOfFigure[currentPosition].classList.remove('active');
     listOfFigure[currentPosition].classList.add('d-none');
     allThumbFigure[currentPosition].classList.remove('active-image-thumb');
@@ -218,6 +216,16 @@ leftButton.addEventListener('click', () => {
     listOfFigure[currentPosition].classList.add('active');
     allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
     allThumbFigure[currentPosition].classList.add('active-image-thumb');
+}
+
+rightButton.addEventListener('click', () => {
+    rightScroll();
+});
+
+// * Bottone di sinistra
+
+leftButton.addEventListener('click', () => {
+    leftScroll();
 });
 
 // # BONUS 1
@@ -270,43 +278,45 @@ allThumbFigure.forEach((figure, index) => {
 // }, 3000);
 
 // # BONUS 3
+
 let timerInterval;
 
-startButton.addEventListener('click', () => {
+const startIntervalRight = () => {
     timerInterval = setInterval(() => {
-        listOfFigure[currentPosition].classList.remove('active');
-        listOfFigure[currentPosition].classList.add('d-none');
-        allThumbFigure[currentPosition].classList.remove('active-image-thumb');
-        allThumbFigure[currentPosition].classList.add('not-active-image-thumb');
+        rightScroll();
+    }, 3000)
+}
 
-        if (currentPosition === listOfFigure.length - 1) currentPosition = 0;
-        else currentPosition++;
+const startIntervalLeft = () => {
+    timerInterval = setInterval(() => {
+        leftScroll();
+    }, 3000)
+}
 
-        listOfFigure[currentPosition].classList.remove('d-none');
-        listOfFigure[currentPosition].classList.add('active');
-        allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
-        allThumbFigure[currentPosition].classList.add('active-image-thumb');
-    }, 3000);
+// Situazione iniziale
+
+let rightToLeft = false;
+let leftToRight = true;
+
+startButton.addEventListener('click', () => {
+    startIntervalRight();
 })
 
 stopButton.addEventListener('click', () => {
     clearInterval(timerInterval);
+
+    rightToLeft = false;
+    leftToRight = true;
+
 })
 
 invertButton.addEventListener('click', () => {
-    timerInterval = setInterval(() => {
-        listOfFigure[currentPosition].classList.remove('active');
-        listOfFigure[currentPosition].classList.add('d-none');
-        allThumbFigure[currentPosition].classList.remove('active-image-thumb');
-        allThumbFigure[currentPosition].classList.add('not-active-image-thumb');
+    rightToLeft = !rightToLeft;
+    leftToRight = !leftToRight;
 
-        if (currentPosition === 0) currentPosition = listOfFigure.length - 1;
-        else currentPosition--;
+    clearInterval(timerInterval);
 
-        listOfFigure[currentPosition].classList.remove('d-none');
-        listOfFigure[currentPosition].classList.add('active');
-        allThumbFigure[currentPosition].classList.remove('not-active-image-thumb');
-        allThumbFigure[currentPosition].classList.add('active-image-thumb');
-    }, 3000);
+    if (leftToRight) startIntervalRight();
+    else startIntervalLeft();
 })
 
